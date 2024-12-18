@@ -1,6 +1,6 @@
 import React from 'react'
 import SectionWrapper from './SectionWrapper'
-import { WORKOUTS } from '../utils/swoldier'
+import { SCHEMES, WORKOUTS } from '../utils/swoldier'
 import { useState } from 'react'
 
 function Header(props){
@@ -19,6 +19,10 @@ function Header(props){
 export default function Generator() {
   const [showModel, setShowModel] = useState(false)
 
+  const [poison, setPosion] = useState('individual')
+  const [muscles, setMuscles] = useState([])
+  const [goal, setGoal] = useState("strengh_power")
+
   function toggleModel(){
     setShowModel(!showModel)
   }
@@ -29,8 +33,10 @@ export default function Generator() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4">
         {Object.keys(WORKOUTS).map((type, typeIndex) => {
           return(
-            <button key={typeIndex} className="bg-slate-950 border border-blue-400 py-3 rounded-lg duration-200 hover:border-blue-600">
-              <p className="captialize">{type.replaceAll('_', " ")}</p>
+            <button onClick={() =>{
+              setPosion(type)
+            }} key={typeIndex} className={'bg-slate-950 border duration-200 hover:border-blue-600 py-3 rounded-lg ' + (type === poison ? 'border-blue-600' : 'border-blue-400')}>
+              <p className="capitalize">{type.replaceAll('_', " ")}</p>
             </button>
           )
         })}
@@ -46,6 +52,21 @@ export default function Generator() {
           <div>modal</div>
         )}
       </div>
+
+
+      <Header index={'03'} title={'Become Juggernaut'} description ={'Select your utimate objective.'} />
+      <div className="grid grid-cols-3  gap-4 py-4">
+      {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
+          return(
+            <button onClick={() =>{
+              setGoal(scheme)
+            }} key={schemeIndex} className={'bg-slate-950 border duration-200 hover:border-blue-600 py-3 rounded-lg ' + (scheme === goal ? 'border-blue-600' : 'border-blue-400')}>
+              <p className="capitalize">{scheme.replaceAll('_', " ")}</p>
+            </button>
+          )
+        })}
+      </div>
+
 
     </SectionWrapper>
 
