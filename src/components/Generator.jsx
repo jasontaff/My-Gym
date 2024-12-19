@@ -27,6 +27,29 @@ export default function Generator() {
     setShowModel(!showModel)
   }
 
+  function updateMuscles(muscleGroup){
+
+    
+    if(muscles.includes(muscleGroup)){
+      setMuscles(muscles.filter(val =>  val !==muscleGroup ))
+      return
+    }
+
+    if(muscles.length > 3) {
+      return
+    }
+
+    if(poison !== 'individual'){
+      setMuscles([muscleGroup])
+      setShowModel(false)
+      return
+    }
+
+
+    setMuscles([...muscles, muscleGroup])
+   
+  }
+
   return (
     <SectionWrapper header={"generate your workout"} title={['It\'s', 'Huge', 'o\'clock']}>
       <Header index={'01'} title={'Pick Your Posion'} description ={'Select the Workout you wish to edure'} />
@@ -49,7 +72,20 @@ export default function Generator() {
           <i className="fa-solid absolute right-3 top-1/2 -translate-y-1/2 fa-caret-down"></i>
         </button>
         {showModel && (
-          <div>modal</div>
+          <div className="flex flex-col p-3">
+            { (poison === 'individual' ? WORKOUTS[poison] : Object.keys(WORKOUTS[poison])).map((muscleGroup, muscleGroupIndex) => {
+              return (
+                <button
+                  key={muscleGroupIndex}
+                  className={`hover:text-blue-400 duration-200 ${muscles.includes(muscleGroup) ? 'text-blue-400' : ''}`}
+                  onClick={() => updateMuscles(muscleGroup)}
+                  aria-label={`Select muscle group ${muscleGroup}`}
+                >
+                  <p className="uppercase">{muscleGroup.replaceAll('_', '')}</p>
+                </button>
+              );
+           })}
+          </div>
         )}
       </div>
 
