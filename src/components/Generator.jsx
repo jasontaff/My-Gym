@@ -35,7 +35,7 @@ export default function Generator() {
       return
     }
 
-    if(muscles.length > 3) {
+    if(muscles.length > 2) {
       return
     }
 
@@ -47,6 +47,9 @@ export default function Generator() {
 
 
     setMuscles([...muscles, muscleGroup])
+    if(muscles.length === 3){
+
+    }
    
   }
 
@@ -81,7 +84,9 @@ export default function Generator() {
                   onClick={() => updateMuscles(muscleGroup)}
                   aria-label={`Select muscle group ${muscleGroup}`}
                 >
-                  <p className="uppercase">{muscleGroup.replaceAll('_', '')}</p>
+                  <p className="uppercase">
+                    {muscleGroup.replaceAll('_', '')}
+                    </p>
                 </button>
               );
            })}
